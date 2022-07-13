@@ -1,0 +1,42 @@
+{% extends 'app/base.htm' %}
+{% load static %}
+{% block base %}
+<div class="container">
+<h2>Atenciones</h2>
+</div>
+<div class="container">
+<div class="atenciones row">
+    {% for a in atenciones %}
+    <div class="col-md-4 mx-10 my-3 d-flex justify-content-center">
+        <div class="card" style="width:400px">
+            <div class="atencion">
+                <div class="contenedor_atencion">
+                {% if a.imagen %}
+                <img src="{{ a.imagen.url }}" alt="imagen atencion" class="card-img-top">
+                {% endif %}
+                <div class="card-body">
+                    <div class="detalle">
+                        <h4>Atencion: {{ a.tipoate | capfirst }}</h4>
+                        <h5>{{ a.categoria | title }}</h5>
+                        <h6>{{ a.descripcion | capfirst }}</h6>
+                        <a href="{% url 'atencionDetalle' a.id %}" class="btn btn-primary">detalle</a>
+                        {% if user.is_authenticated %}
+                        <a href="{% url 'modatencion' a.id %}" class="btn btn-primary">modificar</a>
+                        <a href="{% url 'delatencion' a.id %}" class="btn btn-primary">eliminar</a>
+                        {% endif %}
+                    </div>
+                    {% if user.is_authenticated %}
+                    <div>
+                        <h6>El usuario debe tener permisos de administrador para modificar o eliminar una atencion.</h6>
+                    </div>
+                    {% endif %}
+                </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+
+</div>
+{% endblock %}

@@ -1,0 +1,91 @@
+<h1>Administracion de Atenciones</h1>
+<h2>Bienvenido: {{user.first_name}} {{user.last_name}}</h2>
+
+<section id="formulario">
+    <form id="form-registro" action="{% url 'ADMIN' %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <h2 class="form-titulo">Formulario Ingreso de Atenciones</h2>
+        <div id="contenedor-inputs">
+            <input class="col-p" type="text" name="nombreate" id="nombreate" placeholder="Atencion">
+            <textarea class="col-g" name="txtDescripcion" id="txtDescripcion" cols="30" rows="10"></textarea>
+            <input class="col-g" type="file" name="txtImagen" id="txtImagen">
+            <select class="col-g" name="cboCategoria" id="cboCategoria">
+                <option value="">Seleccione..</option>
+                <option value="correctivo">Mantenimiento correctivo</option>
+                <option value="preventivo">Mantenimiento preventivo</option>
+                {% for reg in items %}
+                <option value="{{reg.nombre}}">{{reg.nombre}}</option>
+                {% endfor %}
+
+            </select>
+            <input class="btn-registros" type="submit" value="Enviar">
+            <input class="btn-registros" type="reset" value="Limpiar">
+            {{mensaje}}
+        </div>
+    </form>
+</section>
+
+<section style="margin-top: 45px;">
+    <div style="text-align: center;">
+        <h2>Listado de Mascotas del Usuario: {{user.username}}, Cantidad: {{cantidad}}</h2>
+    </div>
+    <div style="padding: 15px;">
+        <table class="table">
+            <thead>
+                <td>Nombre</td>
+                <td>Edad</td>
+                <td>Descripcion</td>
+                <td>Imagen</td>
+                <td>Publicar</td>
+                <td>Comentario</td>
+                <td>Categoria</td>
+                <td>Opciones</td>
+            </thead>
+            <tbody>
+                {% for reg in mascotas %}
+                {% if reg.publicar %}
+                <tr>
+                    {% else %}
+                <tr style="background: tomato;">
+                    {% endif %}
+                    <td>{{reg.nombre}}</td>
+                    <td>{{reg.edad}}</td>
+                    <td>{{reg.descripcion}}</td>
+                    <td>
+                        <img src="{{reg.imagen.url}}" alt="" style="width: 150px; height: 150px;">
+                    </td>
+                    <td>
+                        {% if reg.publicar %}
+                        PUBLICADO
+                        {% else %}
+                        NO PUBLICADO
+                        {% endif %}
+                    </td>
+                    <td>{{reg.comentario}}</td>
+                    <td>{{reg.categoria}}</td>
+                    <td>
+                        <button class="btn-primary" onclick="eliminar('{{reg.nombre}}')">Eliminar</button>
+                        <button class="btn-primary">Modificar</button>
+                        <button class="btn-primary">Foto</button>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</section>
+<script>
+    function eliminar(nombre) {
+        Swal.fire({
+            title: '¿Desea eliminar la mascota '+nombre+'?',
+            showCancelButton: true,
+            confirmButtonText: 'OK',
+            denyButtonText: 'Cancelar',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                Swal.fire('eliminado!', '', 'success')
+                location.href='/eliminar/'+nombre+'/';
+            } 
+        })
+    }
+</script>

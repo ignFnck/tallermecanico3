@@ -1,0 +1,48 @@
+{% extends 'app/base.htm' %}
+{% load static %}
+{% block base %}
+
+<!-- carrusel-->
+<div class="container-fluid"></div>
+<div id="carouselExampleInterval" class="my-slider" data-bs-ride="carousel">
+    <div class="carousel-inner">
+        <div class="carousel-item active" data-bs-interval="2000">
+            <img src="{% static 'app/img/auto.jpg' %}" class="d-block w-100" alt="..." style="width: 1580px;height: 800px;">
+            <div class="carousel-caption d-none d-md-block fondo-c">
+                <h5>Atenciones de vehiculo</h5>
+                <p>Hecha un vistaso a nuestras atenciones</p>
+                <a href="{% url 'atencion' %}">Visitar</a>
+            </div>
+        </div>
+        {% for a in atenciones %}
+        <div class="carousel-item" data-bs-interval="2000">
+            <img src="{{ a.imagen.url }}" class="d-block w-100" alt="..." style="width: 1580px;height: 800px;">
+            <div class="carousel-caption d-none d-md-block" style="background-color: rgba(0, 0, 0, 0.5); border-radius: 15px;">
+                <h5>Atencion: {{ a.tipoate | capfirst }}</h5>
+                <p>{{ a.descripcion | capfirst }}</p>
+                <a href="{% url 'atencionDetalle' a.id %}">Visitar</a>
+            </div>
+        </div>
+        {% endfor %}
+</div>
+
+    <div class="text" style="text-align: center; background-color: black;">
+        <h2 style="color: white;">Nuestros Mecanicos</h2>
+        <div class="row">
+            <div class="col-6">
+                <a href="{% url 'SEBA' %}">
+                    <img style="width: 50%;height: 85%;border-radius: 50%;" src="{% static 'app/img/sebastian.jpg' %}" alt="...">
+                </a> 
+                <h3 style="color: white;">Sebastian</h3>
+            </div>
+            <div class="col-6">
+                <a href="{% url 'CRIS' %}">
+                    <img style="width: 50%;height: 85%;border-radius: 50%;" src="{% static 'app/img/cristian.jpg' %}" alt="...">
+                </a>
+                <h3 style="color: white;">Cristian</h3>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}

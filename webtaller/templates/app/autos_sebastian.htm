@@ -1,0 +1,22 @@
+{% extends 'app/base.htm' %}
+{% load static %}
+{% block base %}
+
+
+{% block base %}
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-sm-8">
+                <img src="{% static 'app/img/mecanico1.jpg' %}" width="800px">
+            </div>
+            <div class="col-sm-4">
+                <p>Auto con severas fallas en el motor</p>
+                <p>Atendido por Sebastian Gimenez</p>
+                <p>18/4/2021</p>
+                <p>En este trabajo se usó valvulas, casquetes, empaques, bujías y sellos</p>
+                <a href="{% url 'index' %}">Volver al inicio</a>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

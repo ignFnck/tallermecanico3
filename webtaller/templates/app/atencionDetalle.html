@@ -1,0 +1,24 @@
+{% extends 'app/base.htm' %}
+{% load static %}
+{% block base %}
+
+{% for a in atenciones %}
+<div class="container mt-5 min-vh-100">
+    <div class="row">
+      <div class="col-sm-7 mt-5">
+        <img src="{{ a.imagen.url }}" alt="" width="500px">
+        {% for a in a.imagenes.all %}
+            <img src="{{ a.imagen.url }}" alt="" width="500px">
+        {% endfor %}
+      </div>
+      <div class="col-sm-5">
+        <h1>Atencion: {{ a.tipoate | capfirst }}</h1>
+        <h5>Tipo vehiculo: {{ a.categoria | title }}</h5>
+        <p>{{ a.descripcion | capfirst }}</p>
+        <p>{{ a.comentario | capfirst }}</p>
+        <p>Atendido por: {{ a.usuario }}</p>
+    </div>
+  </div>
+{% endfor %}
+
+{% endblock %}
